@@ -2,7 +2,6 @@ import math
 import random
 
 p = 1000
-a = p
 
 annRate = 10
 
@@ -13,10 +12,17 @@ years = 5
 monAdd = 100
 yearAdd = monAdd * 12
 
-for i in range(years):
-    rate = int(random.randint(annRate - variance, annRate + variance))
+prices = []
 
-    a *= 1 + 0.01 * rate
+for j in range(1000): # monte carlo
+    a = p
+    for i in range(years): # calculate return
+        rate = random.randint(annRate - variance, annRate + variance)
+        a *= 1 + 0.01 * rate
+        a += yearAdd
+    prices.append(a) 
 
-    a += yearAdd
-    print("Year ", i + 1, " amount: $", a)
+
+avg = sum(prices) / len(prices)
+
+print("Avg price: $", avg)
