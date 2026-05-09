@@ -1,15 +1,15 @@
 import math
 import random
 
-p = 1000
+p = int(input("Principal: $"))
 
-annRate = 10
+annRate = int(input("Annual Rate (ex. 10): "))
 
-variance = 20
+variance = int(input("Rate variance: "))
 
-years = 5
+years = int(input("# of years: "))
 
-monAdd = 100
+monAdd = int(input("Monthly contribution: "))
 yearAdd = monAdd * 12
 
 prices = []
@@ -23,6 +23,6 @@ for j in range(1000): # monte carlo
     prices.append(a) 
 
 
-avg = sum(prices) / len(prices)
+avg = round(sum(prices) / len(prices), 2)
 
 print("Avg price: $", avg)
