@@ -9,10 +9,10 @@ variance = int(input("Rate variance: "))
 
 years = int(input("# of years: "))
 
-monAdd = int(input("Monthly contribution: "))
+monAdd = int(input("Monthly contribution: $"))
 yearAdd = monAdd * 12
 
-prices = []
+prices = [[]]
 
 for j in range(1000): # monte carlo
     a = p
@@ -20,9 +20,19 @@ for j in range(1000): # monte carlo
         rate = random.randint(annRate - variance, annRate + variance)
         a *= 1 + 0.01 * rate
         a += yearAdd
-    prices.append(a) 
+        try:
+            prices[i].append(a)
+        except IndexError:
+            prices.append([])
+            prices[i].append(a)
+    
 
+for i in range(len(prices)):
+    print("Year", i + 1, "estimate: $", round(sum(prices[i])/len(prices[i]), 2))
 
-avg = round(sum(prices) / len(prices), 2)
+# add matplotlib graphs? 
+"""
+import matplotlib as plt
 
-print("Avg price: $", avg)
+plt.plot()
+"""
