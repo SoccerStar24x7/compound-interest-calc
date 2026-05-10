@@ -4,46 +4,36 @@ import numpy as np
 import csv
 import logging
 logging.basicConfig(filename='myProgramLog.txt', level=logging.DEBUG, format='%(asctime)s -  %(levelname)s -  %(message)s')
-"""
-p = int(input("Principal: $"))
+logging.getLogger('matplotlib.font_manager').disabled = True
 
-annRate = int(input("Annual Rate (ex. 10): "))
+logging.disable(logging.CRITICAL)
 
-variance = int(input("Rate variance: "))
+cycles = 1000
 
-years = int(input("# of years: "))
+visualize = True
+
+p = float(input("Principal: $"))
+
+annRate = float(input("Annual Rate (ex. 10%): "))
+
+variance = float(input("Rate variance (%): "))
+
+years = int(input("# of years: ")) + 1
 year = np.arange(years)
 
-
-monAdd = int(input("Monthly contribution: $"))
-"""
-p = 1000
-annRate = 10
-variance = 20
-years = 5 + 1
-year = np.arange(years)
-
-"""
-for num in range(len(year)):
-    year[num] += 1
-"""
-
-logging.debug(f"# of years: {len(year)}")
-
-monAdd = 100
-# sadf
+monAdd = float(input("Monthly contribution: $"))
 
 yearAdd = monAdd * 12
 
 prices = [[]]
 
-for j in range(1000): # monte carlo
+for j in range(cycles): # monte carlo
     a = p # every scenario reset
     for i in range(years): # for every year...
         if i == 0:
             continue
-        rate = random.randint(annRate - variance, annRate + variance) # rate for that year
-        a *= 1 + 0.01 * rate # applies the rate
+        rate = random.randint(int(annRate - variance), int(annRate + variance)) # rate for that year
+        a *= 1 + 0.01 * rate # applies the ratewd
         a += yearAdd # adds the monthly contribution
         a = round(a, 2)
         try:
@@ -82,22 +72,40 @@ for i in range(len(prices)):
     avgs.append(avg)
     
 for i in range(len(prices)):
-    print("Year", i + 1, "estimate: $", avgs[i])
+    print(f"Year {i} estimate: ${avgs[i]}")
 
-# add matplotlib graphs? 
 
 logging.debug(f"len prices[0]: {len(prices[0])}")
 logging.debug(f"len prices[1]: {len(prices[1])}")
 
 
+if not visualize:
+    exit(0)
 
 import matplotlib.pyplot as plt
 
-plt.scatter(year, avgs)
+logging.debug(f"len year: {len(year)}")
+logging.debug(f"len pr: {len(pr)}")
 
-plt.title("Compound interest simulator")
+# plt.scatter(ya, pr)
+
+logging.debug(f"len prices[1]: {len(prices[1])}")
+
+for i in range(len(prices[1])):
+    b = []
+    b.append(prices[0][0])
+    for j in range(years):
+        if j == 0:
+            continue
+        b.append(prices[j][i])
+    
+    plt.plot(year, b, linewidth=1, alpha=0.6)
+
+plt.plot(year, avgs, linewidth=2.5, alpha=1)
+
+plt.title("Compound interest sim.")
 plt.xlabel("Years") 
-plt.ylabel("Price")
+plt.ylabel("Amount ($)")
 
 plt.minorticks_on()
 plt.tick_params(labelright=True)
