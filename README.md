@@ -1,1 +1,1 @@
-Compound interest calculator using Monte Carlo simulations and Python to determine the projected amount based on variables described by the user.
+Compound interest calculator using Monte Carlo simulations, Python, and Matplotlib to determine the projected amount based on variables described by the user.
